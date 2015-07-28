@@ -4,14 +4,15 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.webkit.WebView;
 
-import sun.bob.jswebview.jsinterface.ABSBaseInterface;
 import sun.bob.jswebview.jsinterface.BaseInterface;
+import sun.bob.jswebview.jsinterface.CallBackFunction;
 
 /**
  * Created by bob.sun on 15/7/27.
  */
 public class JSWebView extends WebView {
     private boolean baseLoaded = false;
+    private BaseInterface baseInterface;
     public JSWebView(Context context) {
         super(context);
         init();
@@ -28,7 +29,7 @@ public class JSWebView extends WebView {
         this.getSettings().setJavaScriptEnabled(true);
     }
 
-    public void addJSInterface(ABSBaseInterface object, String nameSpace){
+    public void addJSInterface(Object object, String nameSpace){
         this.addJavascriptInterface(object, nameSpace);
     }
 
@@ -36,8 +37,13 @@ public class JSWebView extends WebView {
     public void loadUrl(String url){
         super.loadUrl(url);
         if (!baseLoaded){
-            this.addJSInterface(new BaseInterface(getContext()),"Base");
+            baseInterface = new BaseInterface(getContext());
+            this.addJSInterface(baseInterface,"Base");
         }
+    }
+
+    public void addBaseHandler(String name, CallBackFunction function){
+        baseInterface.addHandler(name, function);
     }
 
 

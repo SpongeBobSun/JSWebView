@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import sun.bob.jswebview.R;
+import sun.bob.jswebview.jsinterface.CallBackFunction;
 import sun.bob.jswebview.utils.Constants;
 import sun.bob.jswebview.utils.UriUtil;
 import sun.bob.jswebview.widget.JSWebView;
@@ -37,5 +38,9 @@ public class JSWebViewActivity extends AppCompatActivity {
 
     public void loadUrl(String url){
         webView.loadUrl(url);
+    }
+
+    public void addBaseHandler(String name, CallBackFunction function){
+        webView.addBaseHandler(name, function);
     }
 }

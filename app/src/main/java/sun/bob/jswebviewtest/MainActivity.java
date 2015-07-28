@@ -1,5 +1,6 @@
 package sun.bob.jswebviewtest;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +11,7 @@ import android.webkit.JavascriptInterface;
 
 import sun.bob.jswebview.activities.ImagePreviewActivity;
 import sun.bob.jswebview.activities.JSWebViewActivity;
-import sun.bob.jswebview.jsinterface.ABSBaseInterface;
+import sun.bob.jswebview.jsinterface.CallBackFunction;
 import sun.bob.jswebview.utils.Constants;
 import sun.bob.jswebview.utils.UriUtil;
 import sun.bob.jswebview.widget.JSWebView;
@@ -21,6 +22,15 @@ public class MainActivity extends JSWebViewActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loadUrl("file:///android_asset/index.html");
+        addBaseHandler("chooseImage", new CallBackFunction() {
+            @Override
+            public void run(String... args) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("image/*");
+                startActivityForResult(intent, Constants.REQUEST_CODE_PICK_IMAGE);
+            }
+        });
     }
 
     @Override

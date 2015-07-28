@@ -4,17 +4,11 @@
     <title>
         js调用java
     </title>
-    <script type="text/javascript">
-        function testClick(){
-            console.log('click');
-            Base.chooseImage();
-        }
-    </script>
 </head>
 
 <body>
 <p>
-    <input type="button" id="enter" value="选择图片" onclick="testClick();" />
+    <input type="button" id="enter" value="选择图片" onclick="jswebview.chooseImage()" />
     <input type="button" id="uploadimg" value="上传图片" onclick="upLoadImgClick();" />
     <input type="button" id="previewimg" value="预览图片" onclick="previewImgClick();" />
     <input type="button" id="closewindow" value="关闭窗口" onclick="closeWindowClick();" />
@@ -22,3 +16,4 @@
     <input type="button" id="getUserInfo" value="获取用户信息" onclick="getUserInfoClick();" />
 </p>
 </body>
+<script src="jswebview.js"></script>
