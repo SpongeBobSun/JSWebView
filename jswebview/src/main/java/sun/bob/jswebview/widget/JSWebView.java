@@ -11,7 +11,6 @@ import sun.bob.jswebview.jsinterface.CallBackFunction;
  * Created by bob.sun on 15/7/27.
  */
 public class JSWebView extends WebView {
-    private boolean baseLoaded = false;
     private BaseInterface baseInterface;
     public JSWebView(Context context) {
         super(context);
@@ -36,9 +35,9 @@ public class JSWebView extends WebView {
     @Override
     public void loadUrl(String url){
         super.loadUrl(url);
-        if (!baseLoaded){
+        if (baseInterface == null){
             baseInterface = new BaseInterface(getContext());
-            this.addJSInterface(baseInterface,"Base");
+            addJavascriptInterface(baseInterface,"Base");
         }
     }
 

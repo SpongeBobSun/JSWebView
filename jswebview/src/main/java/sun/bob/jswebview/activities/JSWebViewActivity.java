@@ -23,6 +23,18 @@ public class JSWebViewActivity extends AppCompatActivity {
         this.setContentView(R.layout.activity_jswebviewactvity);
         webView = (JSWebView) findViewById(R.id.id_jswebview);
     }
+
+    private void initBaseFunctions(){
+        addBaseHandler("chooseImage", new CallBackFunction() {
+            @Override
+            public void run(String... args) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("image/*");
+                startActivityForResult(intent, Constants.REQUEST_CODE_PICK_IMAGE);
+            }
+        });
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         switch (requestCode){
@@ -30,6 +42,7 @@ public class JSWebViewActivity extends AppCompatActivity {
                 Uri imageUri = data.getData();
                 String imagePath = UriUtil.getPath(this, imageUri);
                 Log.e("ImagePath",imagePath);
+                // TODO: 15/7/28 Call Javascript call back & send image path to Javascript.
                 break;
             default:
                 break;
@@ -38,6 +51,7 @@ public class JSWebViewActivity extends AppCompatActivity {
 
     public void loadUrl(String url){
         webView.loadUrl(url);
+        initBaseFunctions();
     }
 
     public void addBaseHandler(String name, CallBackFunction function){
