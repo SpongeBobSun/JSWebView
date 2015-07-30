@@ -1,12 +1,18 @@
 (function(){
     function jswebview(){
-        this.chooseImage = function(){
+    };
+    jswebview.prototype = {
+        images: [],
+        chooseImage: function(){
             Base.call('chooseImage',null);
-        };
-
-//        this.onChooseImageDone(imagePath){
-//            images.put(imagePath);
-//        };
+        },
+        onChooseImageDone: function(imagePath){
+            console.log(imagePath);
+            images.put(imagePath);
+        },
+        jsCallBack: function(){
+            console.log("Calling from Java side");
+        }
     };
     window.jswebview = new jswebview();
 })();

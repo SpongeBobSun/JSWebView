@@ -17,6 +17,7 @@ import sun.bob.jswebview.widget.JSWebView;
  */
 public class JSWebViewActivity extends AppCompatActivity {
     JSWebView webView;
+    String currentImage;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -39,10 +40,13 @@ public class JSWebViewActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         switch (requestCode){
             case Constants.REQUEST_CODE_PICK_IMAGE:
+                if (data == null)
+                    break;
                 Uri imageUri = data.getData();
                 String imagePath = UriUtil.getPath(this, imageUri);
-                Log.e("ImagePath",imagePath);
+                Log.e("ImagePath", imagePath);
                 // TODO: 15/7/28 Call Javascript call back & send image path to Javascript.
+                webView.loadUrl("javascript:jswebview.onChooseImageDone('"+imagePath+"')");
                 break;
             default:
                 break;
