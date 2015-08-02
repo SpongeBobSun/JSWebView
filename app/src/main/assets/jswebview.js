@@ -1,18 +1,43 @@
 (function(){
+    
     function jswebview(){
     };
     jswebview.prototype = {
-        images: [],
-        chooseImage: function(){
-            Base.call('chooseImage',null);
+        events: [],
+        callbackArgs: [],
+        triggerEvent: function(eventName){
+            document.dispatchEvent(this.events[eventName]);
         },
-        onChooseImageDone: function(imagePath){
-            console.log(imagePath);
-            images.put(imagePath);
+        addEvent: function(eventName,callback){
+            this.events[eventName] = document.createEvent('Event');
+            this.events[eventName].initEvent(eventName, true, true);
+            document.addEventListener(eventName,callback,false);
         },
-        jsCallBack: function(){
-            console.log("Calling from Java side");
+        //callNative is the ONLY interface which js code call android native code.
+        callNative: function(nativeName){
+            if (!this.events[nativeName]){
+                console.log('Event is not defined, please call addEvent to add one first.')
+                return;
+            }
+            this.triggerEvent(nativeName);
+        },
+        //nativeCallBack is the ONLY interface which android native code call js code.
+        nativeCallBack: function(eventName){
+            this.callbackArgs[eventName] = Array.prototype.slice.call(arguments,1,arguments.length);
+            this.triggerEvent(eventName);
         }
     };
     window.jswebview = new jswebview();
+    
+    //Add js-sdk build in functions.
+    window.jswebview.addEvent('test',function(){
+        console.log('testEvent');
+    });
+    window.jswebview.addEvent('chooseImage',function(){
+        Base.call('chooseImage',null);
+    });
+    window.jswebview.addEvent('onChooseImageDone',function(){
+        console.log(window.jswebview.callbackArgs['onChooseImageDone']);
+    })
+    
 })();

@@ -46,7 +46,7 @@ public class JSWebViewActivity extends AppCompatActivity {
                 String imagePath = UriUtil.getPath(this, imageUri);
                 Log.e("ImagePath", imagePath);
                 // TODO: 15/7/28 Call Javascript call back & send image path to Javascript.
-                webView.loadUrl("javascript:jswebview.onChooseImageDone('"+imagePath+"')");
+                webView.loadUrl("javascript:jswebview.nativeCallBack('onChooseImageDone', '"+imagePath+"')");
                 break;
             default:
                 break;
