@@ -1,7 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="sun.bob.jswebview">
 
     <application android:allowBackup="true" android:label="@string/app_name">
+        <activity android:name=".activities.ImagePreviewActivity">
 
+        </activity>
     </application>
 
 </manifest>

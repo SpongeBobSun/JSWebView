@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import sun.bob.jswebview.R;
 import sun.bob.jswebview.jsinterface.CallBackFunction;
@@ -33,6 +34,30 @@ public class JSWebViewActivity extends AppCompatActivity {
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("image/*");
                 startActivityForResult(intent, Constants.REQUEST_CODE_PICK_IMAGE);
+            }
+        });
+        addBaseHandler("previewImage", new CallBackFunction() {
+            @Override
+            public void run(String... args) {
+                Intent intent = new Intent(JSWebViewActivity.this, ImagePreviewActivity.class);
+                intent.putExtra("image_file_path", args[0]);
+                startActivity(intent);
+            }
+        });
+        addBaseHandler("closeWindow", new CallBackFunction() {
+            @Override
+            public void run(String... args) {
+                JSWebViewActivity.this.finish();
+            }
+        });
+        addBaseHandler("setWindowTitle", new CallBackFunction() {
+            @Override
+            public void run(String... args) {
+                if (args[0] == null){
+                    Toast.makeText(JSWebViewActivity.this, "Title argument is empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                JSWebViewActivity.this.getSupportActionBar().setTitle(args[0]);
             }
         });
     }

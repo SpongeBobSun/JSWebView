@@ -16,7 +16,7 @@
         //callNative is the ONLY interface which js code call android native code.
         callNative: function(nativeName){
             if (!this.events[nativeName]){
-                console.log('Event is not defined, please call addEvent to add one first.')
+                Base.call(arguments[0]);
                 return;
             }
             this.triggerEvent(nativeName);
@@ -38,6 +38,11 @@
     });
     window.jswebview.addEvent('onChooseImageDone',function(){
         console.log(window.jswebview.callbackArgs['onChooseImageDone']);
-    })
-    
+    });
+    window.jswebview.addEvent('previewImage', function(){
+        Base.call('previewImage', window.jswebview.callbackArgs['onChooseImageDone']);
+    });
+    window.jswebview.addEvent('closeWindow',function(){
+        Base.call('closeWindow');
+    });
 })();
