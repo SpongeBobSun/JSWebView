@@ -19,7 +19,6 @@ import sun.bob.jswebview.widget.JSWebView;
  */
 public class JSWebViewActivity extends AppCompatActivity {
     JSWebView webView;
-    String currentImage;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -48,13 +47,7 @@ public class JSWebViewActivity extends AppCompatActivity {
         addBaseHandler("closeWindow", new CallBackFunction() {
             @Override
             public void run(String... args) {
-//                Handler handler = new Handler();
-//                handler.post(new Runnable() {
-//                    @Override
-//                    public void run() {
                 JSWebViewActivity.this.finish();
-//                    }
-//                });
             }
         });
         addBaseHandler("setWindowTitle", new CallBackFunction() {

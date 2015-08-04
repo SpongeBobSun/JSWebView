@@ -20,19 +20,6 @@ public class BaseInterface {
         this.context = context;
         functions = new HashMap<>();
     }
-//    @JavascriptInterface
-//    public void chooseImage() {
-//        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//        intent.addCategory(Intent.CATEGORY_OPENABLE);
-//        intent.setType("image/*");
-//        ((Activity) context).startActivityForResult(intent, Constants.REQUEST_CODE_PICK_IMAGE);
-//    }
-//    @JavascriptInterface
-//    public void previewImage(String filePath){
-//        Intent intent = new Intent((Activity) context, ImagePreviewActivity.class);
-//        intent.putExtra("image_file_path", filePath);
-//        ((Activity) context).startActivity(intent);
-//    }
 
     public BaseInterface addHandler(String name, CallBackFunction function){
         if (function == null){
