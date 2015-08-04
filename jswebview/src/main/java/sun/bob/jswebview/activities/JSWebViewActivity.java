@@ -3,6 +3,7 @@ package sun.bob.jswebview.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
@@ -47,7 +48,13 @@ public class JSWebViewActivity extends AppCompatActivity {
         addBaseHandler("closeWindow", new CallBackFunction() {
             @Override
             public void run(String... args) {
+//                Handler handler = new Handler();
+//                handler.post(new Runnable() {
+//                    @Override
+//                    public void run() {
                 JSWebViewActivity.this.finish();
+//                    }
+//                });
             }
         });
         addBaseHandler("setWindowTitle", new CallBackFunction() {
@@ -57,7 +64,13 @@ public class JSWebViewActivity extends AppCompatActivity {
                     Toast.makeText(JSWebViewActivity.this, "Title argument is empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                JSWebViewActivity.this.getSupportActionBar().setTitle(args[0]);
+                final String title = args[0];
+                JSWebViewActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        JSWebViewActivity.this.getSupportActionBar().setTitle(title);
+                    }
+                });
             }
         });
     }
@@ -70,7 +83,7 @@ public class JSWebViewActivity extends AppCompatActivity {
                 Uri imageUri = data.getData();
                 String imagePath = UriUtil.getPath(this, imageUri);
                 Log.e("ImagePath", imagePath);
-                // TODO: 15/7/28 Call Javascript call back & send image path to Javascript.
+                //Trigger JavaScript event and send the result back;
                 webView.loadUrl("javascript:jswebview.nativeCallBack('onChooseImageDone', '"+imagePath+"')");
                 break;
             default:

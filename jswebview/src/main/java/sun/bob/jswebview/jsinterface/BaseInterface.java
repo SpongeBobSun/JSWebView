@@ -52,7 +52,7 @@ public class BaseInterface {
     }
 
     @JavascriptInterface
-    public void call(String function, String ... args) {
+    public void call(String function, String[] args) {
         functions.get(function).run(args);
     }
 }

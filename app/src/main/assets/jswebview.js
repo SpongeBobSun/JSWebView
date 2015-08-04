@@ -14,9 +14,9 @@
             document.addEventListener(eventName,callback,false);
         },
         //callNative is the ONLY interface which js code call android native code.
-        callNative: function(nativeName){
+        callNative: function(nativeName,arg){
             if (!this.events[nativeName]){
-                Base.call(arguments[0]);
+                Base.call(nativeName,Array.prototype.slice.call(arguments,1,arguments.length));
                 return;
             }
             this.triggerEvent(nativeName);
@@ -33,16 +33,10 @@
     window.jswebview.addEvent('test',function(){
         console.log('testEvent');
     });
-    window.jswebview.addEvent('chooseImage',function(){
-        Base.call('chooseImage',null);
-    });
     window.jswebview.addEvent('onChooseImageDone',function(){
         console.log(window.jswebview.callbackArgs['onChooseImageDone']);
     });
     window.jswebview.addEvent('previewImage', function(){
         Base.call('previewImage', window.jswebview.callbackArgs['onChooseImageDone']);
-    });
-    window.jswebview.addEvent('closeWindow',function(){
-        Base.call('closeWindow');
     });
 })();
