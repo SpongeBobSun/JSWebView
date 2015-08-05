@@ -4,6 +4,10 @@
         <activity android:name=".activities.ImagePreviewActivity">
 
         </activity>
+
+        <activity android:name=".activities.ImageChooseActivity">
+
+        </activity>
     </application>
 
 </manifest>

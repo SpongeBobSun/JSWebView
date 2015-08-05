@@ -30,10 +30,12 @@ public class JSWebViewActivity extends AppCompatActivity {
         addBaseHandler("chooseImage", new CallBackFunction() {
             @Override
             public void run(String... args) {
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                intent.setType("image/*");
-                startActivityForResult(intent, Constants.REQUEST_CODE_PICK_IMAGE);
+//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+//                intent.addCategory(Intent.CATEGORY_OPENABLE);
+//                intent.setType("image/*");
+//                startActivityForResult(intent, Constants.REQUEST_CODE_PICK_IMAGE);
+                Intent intent = new Intent(JSWebViewActivity.this, ImageChooseActivity.class);
+                startActivity(intent);
             }
         });
         addBaseHandler("previewImage", new CallBackFunction() {
