@@ -5,8 +5,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.JsonWriter;
 import android.util.Log;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 import sun.bob.jswebview.R;
 import sun.bob.jswebview.jsinterface.CallBackFunction;
@@ -29,37 +37,43 @@ public class JSWebViewActivity extends AppCompatActivity {
     private void initBaseFunctions(){
         addBaseHandler("chooseImage", new CallBackFunction() {
             @Override
-            public void run(String... args) {
-//                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//                intent.addCategory(Intent.CATEGORY_OPENABLE);
-//                intent.setType("image/*");
-//                startActivityForResult(intent, Constants.REQUEST_CODE_PICK_IMAGE);
+            public void run(String args) {
                 Intent intent = new Intent(JSWebViewActivity.this, ImageChooseActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, Constants.REQUEST_CODE_PICK_IMAGE);
             }
         });
         addBaseHandler("previewImage", new CallBackFunction() {
             @Override
-            public void run(String... args) {
+            public void run(String args) {
                 Intent intent = new Intent(JSWebViewActivity.this, ImagePreviewActivity.class);
-                intent.putExtra("image_file_path", args[0]);
-                startActivity(intent);
+                try {
+                    JSONObject arg = new JSONObject(args);
+                    JSONArray lists = arg.getJSONArray("image_list");
+                    ArrayList filePathList = new ArrayList();
+                    for (int i = 0; i < lists.length(); i++) {
+                        filePathList.add(lists.get(i));
+                    }
+                    intent.putStringArrayListExtra("image_list",filePathList);
+                    startActivity(intent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
         addBaseHandler("closeWindow", new CallBackFunction() {
             @Override
-            public void run(String... args) {
+            public void run(String args) {
                 JSWebViewActivity.this.finish();
             }
         });
         addBaseHandler("setWindowTitle", new CallBackFunction() {
             @Override
-            public void run(String... args) {
-                if (args[0] == null){
+            public void run(String args) {
+                if (args == null){
                     Toast.makeText(JSWebViewActivity.this, "Title argument is empty", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                final String title = args[0];
+                final String title = args;
                 JSWebViewActivity.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -71,15 +85,26 @@ public class JSWebViewActivity extends AppCompatActivity {
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (resultCode == RESULT_CANCELED)
+            return;
         switch (requestCode){
             case Constants.REQUEST_CODE_PICK_IMAGE:
                 if (data == null)
                     break;
-                Uri imageUri = data.getData();
-                String imagePath = UriUtil.getPath(this, imageUri);
-                Log.e("ImagePath", imagePath);
+                ArrayList images = data.getStringArrayListExtra("images");
+                JSONObject arg = new JSONObject();
+                JSONArray args = new JSONArray();
+                Iterator iterator = images.iterator();
+                while(iterator.hasNext()){
+                    args.put(iterator.next());
+                }
+                try {
+                    arg.put("image_list",args);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 //Trigger JavaScript event and send the result back;
-                webView.loadUrl("javascript:jswebview.nativeCallBack('onChooseImageDone', '"+imagePath+"')");
+                webView.loadUrl("javascript:jswebview.nativeCallBack('onChooseImageDone', '" + arg.toString() + "')");
                 break;
             default:
                 break;

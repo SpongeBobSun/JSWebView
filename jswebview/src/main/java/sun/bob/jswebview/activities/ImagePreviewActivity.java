@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
+
 import dpl.bobsun.dummypicloader.DummyPicLoader;
 import sun.bob.jswebview.R;
 
@@ -15,6 +17,7 @@ public class ImagePreviewActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imagepreviewactivity);
-        DummyPicLoader.getInstance(this.getApplicationContext()).loadImageFromFile(getIntent().getStringExtra("image_file_path"), (ImageView) findViewById(R.id.id_imageview));
+        ArrayList images = getIntent().getStringArrayListExtra("image_list");
+//        DummyPicLoader.getInstance(this.getApplicationContext()).loadImageFromFile(getIntent().getStringExtra("image_file_path"), (ImageView) findViewById(R.id.id_imageview));
     }
 }
