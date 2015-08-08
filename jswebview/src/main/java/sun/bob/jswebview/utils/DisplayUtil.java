@@ -9,12 +9,13 @@ import android.util.DisplayMetrics;
 public class DisplayUtil {
     private static DisplayUtil staticInstance;
     private Context mContext;
-    private int screenWidth, screenHeight;
+    private int screenWidth, screenHeight, scaledHeight;
     private DisplayUtil(Context context){
         mContext = context;
         DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
         screenWidth = displayMetrics.widthPixels;
         screenHeight = displayMetrics.heightPixels;
+        scaledHeight = (int) (((float) screenWidth / (float) screenHeight) * screenWidth);
     }
 
     public static DisplayUtil getStaticInstance(Context context){
@@ -27,6 +28,9 @@ public class DisplayUtil {
         return screenWidth;
     }
 
+    public int getScaledHeight() {
+        return scaledHeight;
+    }
     public int getScreenHeight() {
         return screenHeight;
     }
