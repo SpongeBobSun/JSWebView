@@ -60,6 +60,24 @@ public class JSWebViewActivity extends AppCompatActivity {
                 }
             }
         });
+        addBaseHandler("showImage", new CallBackFunction() {
+            @Override
+            public void run(String jsonArgs) {
+                Intent intent = new Intent(JSWebViewActivity.this, ImagePreviewActivity.class);
+                try {
+                    JSONObject arg = new JSONObject(jsonArgs);
+                    JSONArray lists = arg.getJSONArray("image_list");
+                    ArrayList filePathList = new ArrayList();
+                    for (int i = 0; i < lists.length(); i++) {
+                        filePathList.add(lists.get(i));
+                    }
+                    intent.putStringArrayListExtra("image_list",filePathList);
+                    startActivity(intent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         addBaseHandler("closeWindow", new CallBackFunction() {
             @Override
             public void run(String args) {
