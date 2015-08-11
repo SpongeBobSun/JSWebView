@@ -1,5 +1,6 @@
 package sun.bob.jswebview.client;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.webkit.ConsoleMessage;
@@ -9,10 +10,17 @@ import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
+import sun.bob.jswebview.utils.JSAlertDialog;
+import sun.bob.jswebview.utils.JSConfirmDialog;
+
 /**
  * Created by bob.sun on 15/8/4.
  */
 public class BaseChromeClient extends AbsJSChromeClient {
+    private Context mContext;
+    public BaseChromeClient(Context context){
+        this.mContext = context;
+    }
     @Override
     public void onProgressChanged(WebView view, int newProgress) {
 
@@ -35,12 +43,14 @@ public class BaseChromeClient extends AbsJSChromeClient {
 
     @Override
     public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
-        return false;
+        new JSAlertDialog(mContext, result).setMessage(message).show();
+        return true;
     }
 
     @Override
     public boolean onJsConfirm(WebView view, String url, String message, JsResult result) {
-        return false;
+        new JSConfirmDialog(mContext,result).setMessage(message).show();
+        return true;
     }
 
     @Override

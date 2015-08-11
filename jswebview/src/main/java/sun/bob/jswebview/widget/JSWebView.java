@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.webkit.WebView;
 
+import sun.bob.jswebview.client.BaseChromeClient;
 import sun.bob.jswebview.jsinterface.BaseInterface;
 import sun.bob.jswebview.jsinterface.CallBackFunction;
 
@@ -26,6 +27,7 @@ public class JSWebView extends WebView {
         this.setVerticalScrollBarEnabled(false);
         this.setHorizontalScrollBarEnabled(false);
         this.getSettings().setJavaScriptEnabled(true);
+        this.setWebChromeClient(new BaseChromeClient(getContext()));
     }
 
     public void addJSInterface(Object object, String nameSpace){

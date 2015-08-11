@@ -8,13 +8,15 @@
 
 <body>
 <p>
-    <input type="button" id="enter" value="选择图片" onclick="jswebview.callNative('chooseImage')" />
-    <input type="button" id="uploadimg" value="上传图片" onclick="upLoadImgClick();" />
-    <input type="button" id="previewimg" value="预览图片" onclick="jswebview.callNative('previewImage');" />
-    <input type="button" id="closewindow" value="关闭窗口" onclick="jswebview.callNative('closeWindow');" />
-    <input type="button" id="setTitle" value="设置标题" onclick="jswebview.callNative('setWindowTitle','Whaaaat?');" />
-    <input type="button" id="getUserInfo" value="获取用户信息" onclick="getUserInfoClick();" />
-    <input type="button" id="test" value="触发JS事件测试" onclick="jswebview.nativeCallBack('test','1','2');" />
+    <input type="button" id="enter" value="chooseImage" onclick="jswebview.callNative('chooseImage')" />
+    <input type="button" id="uploadimg" value="uploadImage" onclick="upLoadImgClick();" />
+    <input type="button" id="previewimg" value="previewImage" onclick="jswebview.callNative('previewImage');" />
+    <input type="button" id="closewindow" value="closeWindow" onclick="jswebview.callNative('closeWindow');" />
+    <input type="button" id="setTitle" value="setTitle" onclick="jswebview.callNative('setWindowTitle','Whaaaat?');" />
+    <input type="button" id="getUserInfo" value="getUserInfo" onclick="getUserInfoClick();" />
+    <input type="button" id="test" value="trigger a JS event" onclick="jswebview.nativeCallBack('test','1','2');" />
+    <input type="button" id="alert" value="trigger alert" onclick="alert('Who the fuck are you?');" />
+    <input type="button" id="confirm" value="trigger confirm" onclick="confirm('Whats the point?');" />
 </p>
 </body>
 <script src="jswebview.js"></script>
