@@ -61,7 +61,7 @@ Have fun.
 ###JSWebViewActivity
 * addBaseHandler(String, CallBackFunction)
 		
-		Add a handler with name and action. When JavaScript code call this handler by name, native code will trigger CallBackFunction to perform the action.
+		Add a native handler with name and action. When JavaScript code call this handler by name, native code will trigger CallBackFunction to perform the action.
 
 * loadUrl(String)
 
@@ -69,7 +69,7 @@ Have fun.
 		
 ###JSWebView
 
-	Same interface as JSWebViewActivity. When using JSWebView directly rather tham JSWebViewActivity, you should write your own 'onActivityResult' function to handle the results returned from library build in activity such as 'ImageChooseActivity'.
+	Same interface as JSWebViewActivity. When using JSWebView directly rather than inherit JSWebViewActivity, you should write your own 'onActivityResult' function to handle the results returned from library build in activity such as 'ImageChooseActivity'.
 	
 ###JS-SDK
 
