@@ -15,8 +15,9 @@
         },
         //callNative is the ONLY interface which js code call android native code.
         callNative: function(nativeName,arg){
+            console.log(arg);
             if (!this.events[nativeName]){
-                Base.call(nativeName,arg);
+                Base.call(nativeName,JSON.stringify(arg));
                 return;
             }
             this.triggerEvent(nativeName);

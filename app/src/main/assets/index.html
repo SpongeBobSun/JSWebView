@@ -17,6 +17,7 @@
     <input type="button" id="test" value="trigger a JS event" onclick="jswebview.nativeCallBack('test','1','2');" />
     <input type="button" id="alert" value="trigger alert" onclick="alert('Who the fuck are you?');" />
     <input type="button" id="confirm" value="trigger confirm" onclick="confirm('Whats the point?');" />
+    <input type="button" id="toast" value="trigger toast" onclick="jswebview.callNative('makeToast',{'text': 'whaaat?', 'duration': 5001});" />
 </p>
 </body>
 <script src="jswebview.js"></script>

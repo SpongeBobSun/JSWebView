@@ -100,6 +100,23 @@ public class JSWebViewActivity extends AppCompatActivity {
                 });
             }
         });
+
+        addBaseHandler("makeToast", new CallBackFunction() {
+            @Override
+            public void run(String jsonArgs) {
+                if (jsonArgs == null){
+                    Toast.makeText(JSWebViewActivity.this, "Toast is empty", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(jsonArgs);
+                    Toast.makeText(JSWebViewActivity.this,jsonObject.getString("text"),jsonObject.getInt("duration") == Constants.TOAST_DURATION_LONG ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
